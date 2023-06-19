@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ 
+<configuration>
+	<properties resource="db.properties"/>
+
+	<environments default="dev">
+		<environment id="dev">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver"		value="${jdbc.driver}"/>
+				<property name="url"		value="${jdbc.dev.url}"/>
+				<property name="username"	value="${jdbc.dev.username}"/>
+				<property name="password"	value="${jdbc.dev.password}"/>
+			</dataSource>
+		</environment>
+		<environment id="prod">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver"		value="${jdbc.driver}"/>
+				<property name="url"		value="${jdbc.prod.url}"/>
+				<property name="username"	value="${jdbc.prod.username}"/>
+				<property name="password"	value="${jdbc.prod.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<mapper class="com.hanulplc.customer.nonghyup.mutual.model.NonghyupMutualMapper"/>
+		<mapper class="com.hanulplc.customer.nonghyup.nh.model.NonghyupNHMapper"/>
+		<mapper class="com.hanulplc.customer.bccard.model.BCCardMapper"/>
+		<mapper class="com.hanulplc.customer.daegu.model.DaeguMapper"/>
+		<mapper class="com.hanulplc.customer.woori.model.WooriMapper"/>
+		<mapper class="com.hanulplc.customer.kb.model.KookminBankMapper"/>
+		<mapper class="com.hanulplc.customer.busan.model.BusanBankMapper"/>
+		<mapper class="com.hanulplc.customer.shinhan.model.ShinhanBankMapper"/>
+		<mapper resource="mybatis/mapper/nonghyup.xml"/>
+		<mapper resource="mybatis/mapper/nh.xml"/>
+		<mapper resource="mybatis/mapper/bccard.xml"/>
+		<mapper resource="mybatis/mapper/daegu.xml"/>
+		<mapper resource="mybatis/mapper/woori.xml"/>
+		<mapper resource="mybatis/mapper/kb.xml"/>
+		<mapper resource="mybatis/mapper/busan.xml"/>
+		<mapper resource="mybatis/mapper/shinhan.xml"/>
+	</mappers>
+</configuration>

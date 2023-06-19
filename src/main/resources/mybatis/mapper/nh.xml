@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hanulplc.customer.nonghyup.nh.model.NonghyupNHMapper">
+
+    <select id="findByCaseId" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            RG_CASE_BASE_INFO
+        WHERE
+            RGSTRN_REQ_NUM = #{registrationRequestNumber}
+            AND ACCNT_CD = 'NHN'
+    </select>
+
+    <insert id="saveNewCase" parameterType="java.util.HashMap">
+        INSERT INTO RG_CASE_BASE_INFO
+        (
+            INVST_INST_MGMT_NUM,
+            PROC_ST_CD,
+            RGSTRN_REQ_NUM,
+            LOAN_EXEC_DT,
+            CASE_ST_CD,
+            CASE_CD,
+            TEAM_CD,
+            CASE_RGSTR_NM,
+            CREDIT_MAX_AMT,
+            RGSTRN_TYP_CD,
+            RGSTRN_TYP_DETAIL,
+            RGSTRN_RSN_TYP_CD,
+            CO_CASE_YN,
+            BRANCH_CHRGR_TEL_NUM,
+            BRANCH_CHRGR_FAX_NUM,
+            BRANCH_CHRGR_NM,
+            RGSTRN_RSN_DT,
+            BRANCH_NM,
+            RGSTRN_TYP_SUB_CD,
+            RGST_DT,
+            CASE_RGST_DTM,
+            ACCNT_CD,
+            STLMNT_ON_OFF_CL_CD,
+            VENDOR_REQ_YN,
+            RGSTRN_APPLY_TYP_CD,
+            SND_DOC_MEMO,
+            RGSTRN_DESIRE_DT,
+            RGSTRN_BANK_NUM,
+
+            CORPORATE_NM,
+            CORPORATE_REG_NUM,
+            CORPORATE_ADDR,
+            CORPORATE_TEL_NUM,
+            CORPORATE_POSITION,
+            CORPORATE_CHRGR_NM,
+            CORPORATE_REG_TAX,
+            CORPORATE_EDU_TAX,
+            CORPORATE_EXE_AMT
+        )
+        VALUES
+        (
+            #{INVST_INST_MGMT_NUM},
+            #{PROC_ST_CD},
+            #{RGSTRN_REQ_NUM},
+            #{LOAN_EXEC_DT},
+            #{CASE_ST_CD},
+            #{CASE_CD},
+            #{TEAM_CD},
+            #{CASE_RGSTR_NM},
+            #{CREDIT_MAX_AMT},
+            #{RGSTRN_TYP_CD},
+            #{RGSTRN_TYP_DETAIL},
+            #{RGSTRN_RSN_TYP_CD},
+            #{CO_CASE_YN},
+            #{BRANCH_CHRGR_TEL_NUM},
+            #{BRANCH_CHRGR_FAX_NUM},
+            #{BRANCH_CHRGR_NM},
+            #{RGSTRN_RSN_DT},
+            #{BRANCH_NM},
+            #{RGSTRN_TYP_SUB_CD},
+            DATE_FORMAT(SYSDATE(), '%Y-%m-%d %H:%i:%s'),
+            DATE_FORMAT(SYSDATE(), '%Y-%m-%d %H:%i:%s'),
+            #{ACCNT_CD},
+            '1',
+            'N',
+            '1',
+            #{SND_DOC_MEMO},
+            #{RGSTRN_DESIRE_DT},
+            #{RGSTRN_BANK_NUM},
+
+            #{CORPORATE_NM},
+            #{CORPORATE_REG_NUM},
+            #{CORPORATE_ADDR},
+            #{CORPORATE_TEL_NUM},
+            #{CORPORATE_POSITION},
+            #{CORPORATE_CHRGR_NM},
+            #{CORPORATE_REG_TAX},
+            #{CORPORATE_EDU_TAX},
+            #{CORPORATE_EXE_AMT}
+        )
+    </insert>
+
+    <insert id="saveHRCommissionInfo" parameterType="java.util.HashMap">
+        INSERT INTO RG_TAX_AUTOPAY_INFO
+        (
+            INVST_INST_MGMT_NUM
+        )
+        VALUES
+        (
+            #{INVST_INST_MGMT_NUM}
+        )
+    </insert>
+
+    <insert id="saveNewFee" parameterType="java.util.HashMap">
+        INSERT INTO RG_COMMISSION_INFO
+        (
+            INVST_INST_MGMT_NUM,
+            CASE_CD,
+            COMMISSION_MEMO,
+            ALNC_JDSC_CD,
+            EXEC_JDSC
+        )
+        VALUES
+        (
+            #{INVST_INST_MGMT_NUM},
+            #{CASE_CD},
+            '',
+            '1001',
+            '1'
+        )
+    </insert>
+
+    <insert id="saveNewEstate" parameterType="java.util.List">
+        INSERT INTO RG_EST_INFO
+        (
+            INVST_INST_MGMT_NUM,
+            EST_SEQ_NUM,
+            SIDO,
+            EST_ORGN_NUM,
+            STRT_NEW_ADDR,
+            GDS_TYP_CD_1,
+            GDS_TYP_CD_2,
+            LAND_LOT_CNT
+        )
+        VALUES
+       <foreach collection="list" item="item" separator=",">
+        (
+            #{item.INVST_INST_MGMT_NUM},
+            #{item.EST_SEQ_NUM},
+            #{item.SIDO},
+            #{item.EST_ORGN_NUM},
+            #{item.STRT_NEW_ADDR},
+            #{item.GDS_TYP_CD_1},
+            #{item.GDS_TYP_CD_2},
+            #{item.LAND_LOT_CNT}
+        )
+       </foreach>
+    </insert>
+
+    <insert id="saveNewCustomer" parameterType="java.util.HashMap">
+        INSERT INTO RG_CUST_INFO
+        (
+            INVST_INST_MGMT_NUM,
+            PSNL_CPRTN_CD,
+            CUST_CL_CD,
+            SAME_STTLMNTR,
+            CUST_TEL_NUM_1,
+            CUST_SEQ_NUM,
+            LOCAL_FORGNER_CD,
+            CUST_NM,
+            CUST_CTZ_NUM,
+            CUST_ADDR
+        )
+        VALUES
+        (
+            #{INVST_INST_MGMT_NUM},
+            #{PSNL_CPRTN_CD},
+            #{CUST_CL_CD},
+            #{SAME_STTLMNTR},
+            #{CUST_TEL_NUM_1},
+            #{CUST_SEQ_NUM},
+            #{LOCAL_FORGNER_CD},
+            #{CUST_NM},
+            #{CUST_CTZ_NUM},
+            #{CUST_ADDR}
+        )
+    </insert>
+
+    <insert id="saveNewMoveCustomer" parameterType="java.util.HashMap">
+        INSERT INTO RG_CUST_MOVE_INFO
+        (
+            INVST_INST_MGMT_NUM,
+            MOVE_CUST_CL_CD,
+            MOVE_SEQ_NUM,
+            MOVE_CUST_NM,
+            MOVE_CUST_CTZ_NUM,
+            MOVE_LOCAL_FORGNER_CD,
+            MOVE_PSNL_CPRTN_CD,
+            MOVE_SAME_STTLMNTR,
+            REGDATE
+        )
+        VALUES
+        (
+            #{INVST_INST_MGMT_NUM},
+            #{MOVE_CUST_CL_CD},
+            #{MOVE_SEQ_NUM},
+            #{MOVE_CUST_NM},
+            #{MOVE_CUST_CTZ_NUM},
+            #{MOVE_LOCAL_FORGNER_CD},
+            #{MOVE_PSNL_CPRTN_CD},
+            #{MOVE_SAME_STTLMNTR},
+            #{REGDATE}
+        )
+    </insert>
+
+</mapper>
